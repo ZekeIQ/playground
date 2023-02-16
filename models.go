@@ -26,6 +26,7 @@ type User struct {
 	Team      []User     `gorm:"foreignkey:ManagerID"`
 	Languages []Language `gorm:"many2many:UserSpeak"`
 	Friends   []*User    `gorm:"many2many:user_friends"`
+	Foos      []Foo      `gorm:"many2many:user_foos"`
 	Active    bool
 }
 
@@ -57,4 +58,16 @@ type Company struct {
 type Language struct {
 	Code string `gorm:"primarykey"`
 	Name string
+}
+
+type Foo struct {
+	gorm.Model
+	Bar string
+}
+
+// Custom JoinTable with soft delete functionality
+type UserFoo struct {
+	FooID     uint
+	UserID    uint
+	DeletedAt gorm.DeletedAt
 }
